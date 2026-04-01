@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Extreme Verify · API Documentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #000000;
+            --surface-1: #0a0a0a;
+            --surface-2: #141414;
+            --surface-3: #1c1c1e;
+            --border: rgba(255, 255, 255, 0.08);
+            --blue: #0a84ff;
+            --blue-dim: rgba(10, 132, 255, 0.1);
+            --green: #30d158;
+            --green-dim: rgba(48, 209, 88, 0.1);
+            --orange: #ff9f0a;
+            --orange-dim: rgba(255, 159, 10, 0.1);
+            --red: #ff453a;
+            --red-dim: rgba(255, 69, 58, 0.1);
+            --text-1: #ffffff;
+            --text-2: rgba(235, 235, 245, 0.8);
+            --text-3: rgba(235, 235, 245, 0.38);
+            --mono: 'JetBrains Mono', monospace;
+            --sans: 'Inter', sans-serif;
+            --radius: 10px;
+            --radius-lg: 14px;
+        }
+
+        /* ── Syntax tokens (Xcode dark palette, matches dashboard) ── */
+        .t-kw {
+            color: #ff7ab2;
+        }
+
+        .t-fn {
+            color: #6bdfff;
+        }
+
+        .t-str {
+            color: #fc6;
+        }
+
+        .t-num {
+            color: #ff8170;
+        }
+
+        .t-var {
+            color: #ffffff;
+        }
+
+        .t-key {
+            color: #9ef0f0;
+        }
+
+        .t-cm {
+            color: #5c6773;
+            font-style: italic;
+        }
+
+        .t-op {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .t-met {
+            color: #dabaff;
+        }
+
+        body {
+            background: var(--bg);
+            font-family: var(--sans);
+            color: var(--text-1);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* main layout (no sidebar, clean doc) */
+        .docs-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2rem 2rem 5rem;
+        }
+
+        /* header area */
+        .docs-header {
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--surface-2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            background: linear-gradient(135deg, #0a84ff20, #0a84ff08);
+            border: 1px solid rgba(10, 132, 255, 0.3);
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            color: var(--blue);
+        }
+
+        .badge-version {
+            background: var(--surface-2);
+            border-radius: 40px;
+            padding: 4px 12px;
+            font-family: var(--mono);
+            font-size: 11px;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .header-right {
+            text-align: right;
+        }
+
+        .header-right p {
+            font-size: 13px;
+            color: var(--text-3);
+            font-family: var(--mono);
+        }
+
+        /* TOC & content grid */
+        .docs-grid {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 2.5rem;
+        }
+
+        /* sidebar navigation (docs only) */
+        .docs-sidebar {
+            position: sticky;
+            top: 2rem;
+            align-self: start;
+        }
+
+        .sidebar-section-title {
+            font-size: 11px;
+            font-family: var(--mono);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin: 1.5rem 0 0.75rem 0;
+        }
+
+        .sidebar-section-title:first-of-type {
+            margin-top: 0;
+        }
+
+        .toc-link {
+            display: block;
+            padding: 6px 0 6px 12px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-2);
+            text-decoration: none;
+            border-left: 2px solid transparent;
+            transition: all 0.12s ease;
+            margin-bottom: 2px;
+        }
+
+        .toc-link:hover {
+            color: var(--text-1);
+            border-left-color: var(--blue);
+            background: rgba(10, 132, 255, 0.05);
+        }
+
+        .toc-link.active {
+            color: var(--blue);
+            border-left-color: var(--blue);
+            font-weight: 600;
+        }
+
+        /* main content */
+        .docs-content {
+            min-width: 0;
+        }
+
+        .doc-section {
+            margin-bottom: 3.5rem;
+            scroll-margin-top: 2rem;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title .badge {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            font-size: 12px;
+            font-family: var(--mono);
+            padding: 2px 10px;
+            border-radius: 40px;
+            font-weight: 500;
+            color: var(--text-3);
+        }
+
+        .section-sub {
+            font-size: 15px;
+            color: var(--text-2);
+            margin-bottom: 2rem;
+            border-left: 3px solid var(--blue);
+            padding-left: 16px;
+        }
+
+        .card-docs {
+            background: var(--surface-1);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .endpoint {
+            background: var(--surface-2);
+            border-radius: var(--radius);
+            padding: 1rem 1.2rem;
+            margin-bottom: 1.5rem;
+            font-family: var(--mono);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1rem;
+            border-left: 4px solid var(--blue);
+        }
+
+        .method {
+            font-weight: 800;
+            background: rgba(10, 132, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            letter-spacing: 0.04em;
+            color: var(--blue);
+        }
+
+        .url {
+            font-size: 14px;
+            color: var(--text-1);
+            word-break: break-all;
+        }
+
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .param-table th {
+            text-align: left;
+            font-size: 11px;
+            font-family: var(--mono);
+            letter-spacing: 0.08em;
+            color: var(--text-3);
+            padding: 10px 6px 6px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .param-table td {
+            padding: 10px 6px 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 13px;
+            vertical-align: top;
+        }
+
+        .param-name {
+            font-family: var(--mono);
+            color: var(--blue);
+            font-weight: 600;
+        }
+
+        .param-type {
+            font-size: 10px;
+            background: var(--surface-3);
+            padding: 2px 6px;
+            border-radius: 20px;
+            display: inline-block;
+            font-family: var(--mono);
+            color: var(--text-2);
+        }
+
+        .code-block-wrapper {
+            margin: 1rem 0;
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: #000;
+            border: 1px solid var(--border);
+        }
+
+        .code-header {
+            background: #0c0c0c;
+            padding: 8px 16px;
+            font-family: var(--mono);
+            font-size: 11px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-3);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        pre {
+            padding: 1.2rem;
+            overflow-x: auto;
+            font-family: var(--mono);
+            font-size: 12px;
+            line-height: 1.6;
+            color: #e2e2e2;
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        code {
+            font-family: var(--mono);
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-3);
+            font-family: var(--mono);
+            font-size: 10px;
+            cursor: pointer;
+            transition: color 0.1s;
+        }
+
+        .copy-btn:hover {
+            color: var(--text-1);
+        }
+
+        .note-box {
+            background: var(--blue-dim);
+            border-left: 3px solid var(--blue);
+            padding: 1rem 1.2rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            font-size: 13px;
+            color: var(--text-2);
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .stat-badge {
+            background: var(--surface-2);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 2rem 0;
+        }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+            font-family: var(--mono);
+            color: var(--text-3);
+        }
+
+        @media (max-width: 850px) {
+            .docs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .docs-sidebar {
+                position: relative;
+                margin-bottom: 2rem;
+            }
+
+            .docs-container {
+                padding: 1.5rem;
+            }
+        }
+
+        .highlight {
+            color: var(--green);
+        }
+
+        /* icon helpers */
+        .toc-icon {
+            display: inline-flex;
+            align-items: center;
+            flex-shrink: 0;
+            opacity: 0.65;
+        }
+
+        .toc-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .code-header-icon {
+            opacity: 0.7;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="docs-container">
+        <div class="docs-header">
+            <div>
+                <div class="logo-area">
+                    <img src="https://extremeweb.in/images/extreme.png" alt="Extreme Logo"
+                        style="width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid rgba(10,132,255,0.4);">
+                    <div class="logo-text">Extreme <span>Verify</span></div>
+                    <div class="badge-version">API v2 · stable</div>
+                </div>
+                <div style="margin-top: 12px; font-size: 14px; color: var(--text-2); max-width: 550px;">
+                    RESTful gateway for WhatsApp OTP delivery. End‑to‑end encrypted, rate‑limited & production ready.
+                </div>
+            </div>
+            <div class="header-right">
+                <p>Base URL <span style="color:var(--blue);">https://extremeweb.in</span></p>
+                <p style="margin-top: 4px;">Content-Type: application/json</p>
+            </div>
+        </div>
+
+        <div class="docs-grid">
+            <!-- Table of Contents (anchors) -->
+            <aside class="docs-sidebar">
+                <div class="sidebar-section-title">DOCUMENTATION</div>
+                <a href="#intro" class="toc-link" data-target="intro"><span class="toc-icon"><svg width="13" height="13"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                        </svg></span> Overview</a>
+                <a href="#authentication" class="toc-link" data-target="authentication"><span class="toc-icon"><svg
+                            width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" />
+                        </svg></span> Authentication</a>
+                <a href="#send-otp" class="toc-link" data-target="send-otp"><span class="toc-icon"><svg width="13"
+                            height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13" />
+                            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                        </svg></span> Send OTP (REST)</a>
+                <a href="#send-custom" class="toc-link" data-target="send-custom"><span class="toc-icon"><svg width="13"
+                            height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                        </svg></span> Send Alert (REST)</a>
+                <a href="#rate-limits" class="toc-link" data-target="rate-limits"><span class="toc-icon"><svg width="13"
+                            height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                        </svg></span> Rate Limits &amp; Rules</a>
+                <a href="#error-codes" class="toc-link" data-target="error-codes"><span class="toc-icon"><svg width="13"
+                            height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path
+                                d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                            <line x1="12" y1="9" x2="12" y2="13" />
+                            <line x1="12" y1="17" x2="12.01" y2="17" />
+                        </svg></span> Error Responses</a>
+                <a href="#examples" class="toc-link" data-target="examples"><span class="toc-icon"><svg width="13"
+                            height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="16 18 22 12 16 6" />
+                            <polyline points="8 6 2 12 8 18" />
+                        </svg></span> Code Examples</a>
+                <a href="#webhooks" class="toc-link" data-target="webhooks"><span class="toc-icon"><svg width="13"
+                            height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                        </svg></span> Webhooks (coming)</a>
+                <div class="sidebar-section-title">RESOURCES</div>
+                <a href="#faq" class="toc-link" data-target="faq"><span class="toc-icon"><svg width="13" height="13"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                            <line x1="12" y1="17" x2="12.01" y2="17" />
+                        </svg></span> FAQ</a>
+                <a href="#support" class="toc-link" data-target="support"><span class="toc-icon"><svg width="13"
+                            height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                        </svg></span> Support</a>
+            </aside>
+
+            <!-- Main content sections -->
+            <div class="docs-content">
+                <!-- INTRO -->
+                <section id="intro" class="doc-section">
+                    <div class="section-title">
+                        Overview
+                        <span class="badge">REST API</span>
+                    </div>
+                    <div class="section-sub">
+                        Extreme Verify API allows you to programmatically send both <strong>One-Time Passwords
+                            (OTPs)</strong>
+                        and <strong>Custom Alert Messages</strong> via WhatsApp WebJS infrastructure.
+
+                        Every request is authenticated with your personal API key. Messages are delivered through your
+                        linked WhatsApp device.
+                    </div>
+                    <div class="card-docs">
+                        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px;">
+                            <div style="display:flex;align-items:center;gap:5px;"><span class="param-type"
+                                    style="display:inline-flex;align-items:center;gap:4px;"><svg width="11" height="11"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                    </svg> Encryption</span> AES-256 local sessions</div>
+                            <div style="display:flex;align-items:center;gap:5px;"><span class="param-type"
+                                    style="display:inline-flex;align-items:center;gap:4px;"><svg width="11" height="11"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                                    </svg> Latency</span> ~150ms average</div>
+                            <div style="display:flex;align-items:center;gap:5px;"><span class="param-type"
+                                    style="display:inline-flex;align-items:center;gap:4px;"><svg width="11" height="11"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <line x1="2" y1="12" x2="22" y2="12" />
+                                        <path
+                                            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                                    </svg> Compliance</span> Anti-spam enforced</div>
+                        </div>
+                        <p
+                            style="color: var(--text-2); font-size: 13px; display:flex; align-items:flex-start; gap:6px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)"
+                                stroke-width="2" style="flex-shrink:0;margin-top:2px">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg> Works with any programming language that supports HTTP requests. All responses are
+                            JSON formatted. Web dashboard includes live QR code linking and realtime usage analytics.
+                        </p>
+                    </div>
+
+                    <div class="card-docs" style="margin-top: 1.5rem;">
+                        <h4 style="margin-bottom: 12px; font-weight: 600;">⚡ Supported Use Cases</h4>
+                        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                            <span class="badge"
+                                style="background:var(--blue-dim); color:var(--blue); border:1px solid rgba(10,132,255,0.2); font-size:11px; padding:4px 10px; border-radius:100px;">OTP
+                                Verification</span>
+                            <span class="badge"
+                                style="background:var(--surface-3); color:var(--text-2); border:1px solid var(--border); font-size:11px; padding:4px 10px; border-radius:100px;">Order
+                                confirmation</span>
+                            <span class="badge"
+                                style="background:var(--surface-3); color:var(--text-2); border:1px solid var(--border); font-size:11px; padding:4px 10px; border-radius:100px;">Shipping
+                                update</span>
+                            <span class="badge"
+                                style="background:var(--surface-3); color:var(--text-2); border:1px solid var(--border); font-size:11px; padding:4px 10px; border-radius:100px;">Delivery
+                                alert</span>
+                            <span class="badge"
+                                style="background:var(--surface-3); color:var(--text-2); border:1px solid var(--border); font-size:11px; padding:4px 10px; border-radius:100px;">Class
+                                reminder</span>
+                            <span class="badge"
+                                style="background:var(--surface-3); color:var(--text-2); border:1px solid var(--border); font-size:11px; padding:4px 10px; border-radius:100px;">Notes
+                                uploaded</span>
+                            <span class="badge"
+                                style="background:var(--surface-3); color:var(--text-2); border:1px solid var(--border); font-size:11px; padding:4px 10px; border-radius:100px;">Exam
+                                alerts</span>
+                            <span class="badge"
+                                style="background:var(--surface-3); color:var(--text-2); border:1px solid var(--border); font-size:11px; padding:4px 10px; border-radius:100px;">Payment
+                                success</span>
+                            <span class="badge"
+                                style="background:var(--surface-3); color:var(--text-2); border:1px solid var(--border); font-size:11px; padding:4px 10px; border-radius:100px;">Withdrawal
+                                alert</span>
+                            <span class="badge"
+                                style="background:var(--surface-3); color:var(--text-2); border:1px solid var(--border); font-size:11px; padding:4px 10px; border-radius:100px;">Fraud
+                                alert</span>
+                            <span class="badge"
+                                style="background:var(--surface-3); color:var(--text-2); border:1px solid var(--border); font-size:11px; padding:4px 10px; border-radius:100px;">Transaction
+                                alert</span>
+                            <span class="badge"
+                                style="background:var(--surface-3); color:var(--text-2); border:1px solid var(--border); font-size:11px; padding:4px 10px; border-radius:100px;">Account
+                                login alert</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- AUTHENTICATION -->
+                <section id="authentication" class="doc-section">
+                    <div class="section-title">
+                        Authentication
+                        <span class="badge">API Key</span>
+                    </div>
+                    <div class="section-sub">
+                        Every API request must include your unique <strong>apiKey</strong> inside the JSON payload.
+                        You can find your key on the dashboard → "Authentication Key" section. Keep it secret.
+                    </div>
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span style="display:inline-flex;align-items:center;gap:6px;"><svg class="code-header-icon"
+                                    width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" />
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                </svg> Header / Body pattern</span>
+                            <button class="copy-btn" data-code="auth-sample"
+                                style="display:inline-flex;align-items:center;gap:4px;"><svg width="11" height="11"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" />
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                                </svg> Copy</button>
+                        </div>
+                        <pre id="auth-sample"><span class="t-op">{</span>
+  <span class="t-key">"apiKey"</span><span class="t-op">:</span> <span class="t-str">"your-unique-api-key-xxxxxxxx"</span><span class="t-op">,</span>
+  <span class="t-key">"number"</span><span class="t-op">:</span> <span class="t-str">"91XXXXXXXXXX"</span><span class="t-op">,</span>
+  <span class="t-key">"otp"</span><span class="t-op">:</span>    <span class="t-str">"123456"</span>
+<span class="t-op">}</span></pre>
+                    </div>
+                    <div class="note-box">
+                        <strong style="display:inline-flex;align-items:center;gap:5px;"><svg width="13" height="13"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="12" y1="8" x2="12" y2="12" />
+                                <line x1="12" y1="16" x2="12.01" y2="16" />
+                            </svg> Important</strong> — Your WhatsApp session must be in "CONNECTED" state (green badge)
+                        before sending OTPs.
+                        Use the dashboard to scan QR code once per device.
+                    </div>
+                </section>
+
+                <!-- SEND OTP ENDPOINT -->
+                <section id="send-otp" class="doc-section">
+                    <div class="section-title">
+                        Send OTP
+                        <span class="badge">POST /api/send-otp</span>
+                    </div>
+                    <div class="endpoint">
+                        <span class="method">POST</span>
+                        <span class="url">/api/send-otp</span>
+                    </div>
+                    <div class="card-docs">
+                        <h4 style="margin-bottom: 12px; font-weight: 600;">📦 Request Body (JSON)</h4>
+                        <table class="param-table">
+                            <thead>
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>Type</th>
+                                    <th>Required</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="param-name">apiKey</td>
+                                    <td><span class="param-type">string</span></td>
+                                    <td>✅ yes</td>
+                                    <td>Your personal API key from dashboard</td>
+                                </tr>
+                                <tr>
+                                    <td class="param-name">number</td>
+                                    <td><span class="param-type">string</span></td>
+                                    <td>✅ yes</td>
+                                    <td>Recipient's phone number (international format: 91XXXXXXXXXX or 9198...)</td>
+                                </tr>
+                                <tr>
+                                    <td class="param-name">otp</td>
+                                    <td><span class="param-type">string / integer</span></td>
+                                    <td>✅ yes</td>
+                                    <td>One-time password (4-6 digits recommended)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4 style="margin: 20px 0 12px 0;">✅ Success Response (200)</h4>
+                        <pre
+                            style="background:#000; padding:12px; border-radius:8px; font-size:12px;">{ "success": true }</pre>
+
+                        <h4 style="margin: 20px 0 12px 0;">❌ Error Response</h4>
+                        <pre
+                            style="background:#000; padding:12px; border-radius:8px;">{ "success": false, "error": "WhatsApp not connected" }</pre>
+                    </div>
+                </section>
+
+                <!-- SEND CUSTOM MESSAGE ENDPOINT -->
+                <section id="send-custom" class="doc-section">
+                    <div class="section-title">
+                        Send Custom Alert
+                        <span class="badge">POST /api/send-message</span>
+                    </div>
+                    <div class="endpoint">
+                        <span class="method">POST</span>
+                        <span class="url">/api/send-message</span>
+                    </div>
+                    <div class="card-docs">
+                        <h4 style="margin-bottom: 12px; font-weight: 600;">📦 Request Body (JSON)</h4>
+                        <table class="param-table">
+                            <thead>
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>Type</th>
+                                    <th>Required</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="param-name">apiKey</td>
+                                    <td><span class="param-type">string</span></td>
+                                    <td>✅ yes</td>
+                                    <td>Your personal API key from dashboard</td>
+                                </tr>
+                                <tr>
+                                    <td class="param-name">number</td>
+                                    <td><span class="param-type">string</span></td>
+                                    <td>✅ yes</td>
+                                    <td>Recipient's phone number (international format: 91XXXXXXXXXX)</td>
+                                </tr>
+                                <tr>
+                                    <td class="param-name">message</td>
+                                    <td><span class="param-type">string</span></td>
+                                    <td>✅ yes</td>
+                                    <td>Custom text content (e.g. "Your order has been shipped"). The branding footer is
+                                        automatically appended.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4 style="margin: 20px 0 12px 0;">✅ Success Response (200)</h4>
+                        <pre
+                            style="background:#000; padding:12px; border-radius:8px; font-size:12px;">{ "success": true }</pre>
+
+                        <h4 style="margin: 20px 0 12px 0;">❌ Error Response</h4>
+                        <pre
+                            style="background:#000; padding:12px; border-radius:8px;">{ "success": false, "error": "apiKey, number, and message are required" }</pre>
+                    </div>
+                </section>
+
+                <!-- RATE LIMITS -->
+                <section id="rate-limits" class="doc-section">
+                    <div class="section-title">
+                        Rate Limits & Policies
+                    </div>
+                    <div class="grid-2col">
+                        <div class="stat-badge">
+                            <div
+                                style="font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--blue);">
+                                50</div>
+                            <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;">OTPs / day
+                                per user</div>
+                            <div style="margin-top: 10px; font-size:12px; color: var(--text-3);">Daily limit resets at
+                                00:00 UTC</div>
+                        </div>
+                        <div class="stat-badge">
+                            <div
+                                style="font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--orange);">
+                                45s</div>
+                            <div style="font-size: 11px; text-transform: uppercase;">Cooldown between OTPs</div>
+                            <div style="margin-top: 10px; font-size:12px; color: var(--text-3);">Minimum interval to
+                                avoid flooding</div>
+                        </div>
+                    </div>
+                    <div class="note-box">
+                        🧠 <strong>Intelligent throttling</strong> — If you exceed rate limits, API returns HTTP 429
+                        with detailed message.
+                        Monthly aggregate limit is 1550 messages/month (sandbox tier). Use responsibly to prevent
+                        WhatsApp restrictions.
+                    </div>
+                </section>
+
+                <!-- ERROR CODES -->
+                <section id="error-codes" class="doc-section">
+                    <div class="section-title">Error Reference</div>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Error message</th>
+                                <th>Cause</th>
+                                <th>Resolution</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>Invalid API Key</code></td>
+                                <td>Key missing or incorrect</td>
+                                <td>Check dashboard and copy exact key</td>
+                            </tr>
+                            <tr>
+                                <td><code>WhatsApp not connected</code></td>
+                                <td>Session not ready / expired</td>
+                                <td>Scan QR from dashboard or reconnect</td>
+                            </tr>
+                            <tr>
+                                <td><code>Daily limit reached</code></td>
+                                <td>50 OTPs already sent today</td>
+                                <td>Wait until next UTC day</td>
+                            </tr>
+                            <tr>
+                                <td><code>Please wait X seconds</code></td>
+                                <td>Cooldown active</td>
+                                <td>Implement delay between requests</td>
+                            </tr>
+                            <tr>
+                                <td><code>Failed to send OTP</code></td>
+                                <td>WhatsApp connection lost or number invalid</td>
+                                <td>Check number format (country code)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- CODE EXAMPLES (multi-lang) -->
+                <section id="examples" class="doc-section">
+                    <div class="section-title">Code Examples</div>
+                    <div class="section-sub">Integrate with your stack — copy & paste</div>
+
+                    <!-- PHP -->
+                    <div class="code-block-wrapper" style="margin-bottom: 1.2rem;">
+                        <div class="code-header">
+                            <span style="display:inline-flex;align-items:center;gap:6px;"><svg class="code-header-icon"
+                                    width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <polyline points="16 18 22 12 16 6" />
+                                    <polyline points="8 6 2 12 8 18" />
+                                </svg> PHP · cURL</span>
+                            <button class="copy-btn" data-code="php-example"
+                                style="display:inline-flex;align-items:center;gap:4px;"><svg width="11" height="11"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" />
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                                </svg> Copy</button>
+                        </div>
+                        <pre
+                            id="php-example"><span class="t-cm">// PHP · cURL — send OTP via Extreme Verify API</span>
+<span class="t-kw">$</span><span class="t-var">data</span> <span class="t-op">=</span> <span class="t-op">[</span>
+    <span class="t-str">"apiKey"</span> <span class="t-op">=></span> <span class="t-str">"YOUR_API_KEY_HERE"</span><span class="t-op">,</span>
+    <span class="t-str">"number"</span> <span class="t-op">=></span> <span class="t-str">"91XXXXXXXXXX"</span><span class="t-op">,</span>
+    <span class="t-str">"otp"</span>    <span class="t-op">=></span> <span class="t-fn">rand</span><span class="t-op">(</span><span class="t-num">1111</span><span class="t-op">,</span> <span class="t-num">9999</span><span class="t-op">)</span>
+<span class="t-op">];</span>
+
+<span class="t-kw">$</span><span class="t-var">ch</span> <span class="t-op">=</span> <span class="t-fn">curl_init</span><span class="t-op">(</span><span class="t-str">"https://yourdomain.com/api/send-otp"</span><span class="t-op">);</span>
+<span class="t-fn">curl_setopt</span><span class="t-op">(</span><span class="t-kw">$</span><span class="t-var">ch</span><span class="t-op">,</span> <span class="t-key">CURLOPT_RETURNTRANSFER</span><span class="t-op">,</span> <span class="t-kw">true</span><span class="t-op">);</span>
+<span class="t-fn">curl_setopt</span><span class="t-op">(</span><span class="t-kw">$</span><span class="t-var">ch</span><span class="t-op">,</span> <span class="t-key">CURLOPT_POSTFIELDS</span><span class="t-op">,</span>     <span class="t-fn">json_encode</span><span class="t-op">(</span><span class="t-kw">$</span><span class="t-var">data</span><span class="t-op">));</span>
+<span class="t-fn">curl_setopt</span><span class="t-op">(</span><span class="t-kw">$</span><span class="t-var">ch</span><span class="t-op">,</span> <span class="t-key">CURLOPT_HTTPHEADER</span><span class="t-op">,</span>      <span class="t-op">[</span><span class="t-str">"Content-Type: application/json"</span><span class="t-op">]);</span>
+<span class="t-kw">echo</span> <span class="t-fn">curl_exec</span><span class="t-op">(</span><span class="t-kw">$</span><span class="t-var">ch</span><span class="t-op">);</span></pre>
+                    </div>
+
+                    <!-- Node.js -->
+                    <div class="code-block-wrapper" style="margin-bottom: 1.2rem;">
+                        <div class="code-header">
+                            <span style="display:inline-flex;align-items:center;gap:6px;"><svg class="code-header-icon"
+                                    width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                                    <polyline points="2 17 12 22 22 17" />
+                                    <polyline points="2 12 12 17 22 12" />
+                                </svg> Node.js · Axios</span>
+                            <button class="copy-btn" data-code="node-example"
+                                style="display:inline-flex;align-items:center;gap:4px;"><svg width="11" height="11"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" />
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                                </svg> Copy</button>
+                        </div>
+                        <pre
+                            id="node-example"><span class="t-cm">// Node.js · Axios — send OTP via Extreme Verify API</span>
+<span class="t-kw">const</span> <span class="t-var">axios</span> <span class="t-op">=</span> <span class="t-fn">require</span><span class="t-op">(</span><span class="t-str">'axios'</span><span class="t-op">);</span>
+
+<span class="t-var">axios</span><span class="t-op">.</span><span class="t-met">post</span><span class="t-op">(</span><span class="t-str">'https://yourdomain.com/api/send-otp'</span><span class="t-op">,</span> <span class="t-op">{</span>
+    <span class="t-key">apiKey</span><span class="t-op">:</span> <span class="t-str">'YOUR_API_KEY_HERE'</span><span class="t-op">,</span>
+    <span class="t-key">number</span><span class="t-op">:</span> <span class="t-str">'91XXXXXXXXXX'</span><span class="t-op">,</span>
+    <span class="t-key">otp</span><span class="t-op">:</span>    <span class="t-str">'5678'</span>
+<span class="t-op">})</span>
+<span class="t-op">.</span><span class="t-met">then</span><span class="t-op">(</span><span class="t-var">res</span>  <span class="t-op">=></span> <span class="t-var">console</span><span class="t-op">.</span><span class="t-fn">log</span><span class="t-op">(</span><span class="t-var">res</span><span class="t-op">.</span><span class="t-key">data</span><span class="t-op">))</span>
+<span class="t-op">.</span><span class="t-met">catch</span><span class="t-op">(</span><span class="t-var">err</span> <span class="t-op">=></span> <span class="t-var">console</span><span class="t-op">.</span><span class="t-fn">error</span><span class="t-op">(</span><span class="t-var">err</span><span class="t-op">.</span><span class="t-key">response</span><span class="t-op">?.</span><span class="t-key">data</span><span class="t-op">));</span></pre>
+                    </div>
+
+                    <!-- Python -->
+                    <div class="code-block-wrapper">
+                        <div class="code-header">
+                            <span style="display:inline-flex;align-items:center;gap:6px;"><svg class="code-header-icon"
+                                    width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M12 20h9" />
+                                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                                </svg> Python · requests</span>
+                            <button class="copy-btn" data-code="py-example"
+                                style="display:inline-flex;align-items:center;gap:4px;"><svg width="11" height="11"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" />
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                                </svg> Copy</button>
+                        </div>
+                        <pre
+                            id="py-example"><span class="t-cm"># Python · Requests — send OTP via Extreme Verify API</span>
+<span class="t-kw">import</span> <span class="t-var">requests</span>
+
+<span class="t-var">url</span>     <span class="t-op">=</span> <span class="t-str">"https://yourdomain.com/api/send-otp"</span>
+<span class="t-var">payload</span> <span class="t-op">=</span> <span class="t-op">{</span>
+    <span class="t-str">"apiKey"</span><span class="t-op">:</span> <span class="t-str">"YOUR_API_KEY_HERE"</span><span class="t-op">,</span>
+    <span class="t-str">"number"</span><span class="t-op">:</span> <span class="t-str">"91XXXXXXXXXX"</span><span class="t-op">,</span>
+    <span class="t-str">"otp"</span><span class="t-op">:</span>    <span class="t-str">"9876"</span>
+<span class="t-op">}</span>
+
+<span class="t-var">response</span> <span class="t-op">=</span> <span class="t-var">requests</span><span class="t-op">.</span><span class="t-met">post</span><span class="t-op">(</span><span class="t-var">url</span><span class="t-op">,</span> <span class="t-key">json</span><span class="t-op">=</span><span class="t-var">payload</span><span class="t-op">)</span>
+<span class="t-fn">print</span><span class="t-op">(</span><span class="t-var">response</span><span class="t-op">.</span><span class="t-met">json</span><span class="t-op">())</span></pre>
+                    </div>
+
+                    <div class="note-box" style="display:flex;align-items:flex-start;gap:8px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--blue)"
+                            stroke-width="2" style="flex-shrink:0;margin-top:2px">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="8" x2="12" y2="12" />
+                            <line x1="12" y1="16" x2="12.01" y2="16" />
+                        </svg>
+                        <span>Replace <code class="highlight">YOUR_API_KEY_HERE</code> with the actual key from
+                            dashboard. The endpoint base URL depends on your deployment (localhost or
+                            production).</span>
+                    </div>
+                </section>
+
+                <!-- Webhooks (placeholder) -->
+                <section id="webhooks" class="doc-section">
+                    <div class="section-title">Webhooks (Beta)</div>
+                    <div class="card-docs">
+                        Coming soon: realtime delivery receipts and status callbacks.
+                        Stay tuned for webhook subscription endpoints to receive message status.
+                    </div>
+                </section>
+
+                <!-- FAQ -->
+                <section id="faq" class="doc-section">
+                    <div class="section-title">Frequently Asked Questions</div>
+                    <div style="display: flex; flex-direction: column; gap: 1.2rem;">
+                        <div><span style="color: var(--blue); font-weight: 700;">Q: Is WhatsApp account at
+                                risk?</span><br>A: We enforce strict anti-spam policies. Using realistic delays and not
+                            exceeding daily quota reduces risk.</div>
+                        <div><span style="color: var(--blue); font-weight: 700;">Q: How do I reconnect if session
+                                expires?</span><br>A: On your dashboard, click "RESET SESSION" button and scan fresh QR
+                            code via WhatsApp Linked Devices.</div>
+                        <div><span style="color: var(--blue); font-weight: 700;">Q: Does the API support template
+                                messages?</span><br>A: You can send free-form text using the
+                            <code>/api/send-message</code> route. These alerts bypass strict Meta template approvals.
+                        </div>
+                        <div><span style="color: var(--blue); font-weight: 700;">Q: Can I send OTP to international
+                                numbers?</span><br>A: Yes, but country code must be included (e.g., 1 for US, 44 for
+                            UK). Ensure WhatsApp number is active.</div>
+                    </div>
+                </section>
+
+                <!-- Support -->
+                <section id="support" class="doc-section">
+                    <div class="section-title">Support & SLA</div>
+                    <div class="card-docs"
+                        style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: space-between;">
+                        <div>
+                            <div>📧 Email: <strong>anubhavsingh3644@gmail.com</strong></div>
+                            <div>🕒 Response: 24h business days</div>
+                        </div>
+                        <div>
+                            <div>📱 Discord / Telegram (invite via dashboard)</div>
+                            <div>⚡ Uptime target: 99.5%</div>
+                        </div>
+                    </div>
+                    <div class="note-box" style="margin-top: 16px;">
+                        <strong>⚠️ Liability notice:</strong> Extreme Verify is not affiliated with Meta. Users are
+                        responsible for complying with WhatsApp policies.
+                        Any misuse, spam or unsolicited messaging may lead to permanent suspension without refund.
+                    </div>
+                </section>
+
+                <hr>
+                <div style="font-size: 13px; text-align: center; color: var(--text-3);">
+                    Built with 🔒 security-first design | Version 2.1.0 | © Extreme Web Solutions
+                </div>
+            </div>
+        </div>
+        <footer>
+            Developed by <span style="color: #0a84ff; font-weight: 600;">Anubhav Singh</span> — Extreme Verify Console
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scroll and active highlight for TOC
+        const sections = document.querySelectorAll('.doc-section');
+        const navLinks = document.querySelectorAll('.toc-link');
+
+        function setActiveLink() {
+            let current = '';
+            const scrollPos = window.scrollY + 150;
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                const targetId = link.getAttribute('data-target');
+                if (targetId === current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', setActiveLink);
+        window.addEventListener('load', setActiveLink);
+
+        // Copy functionality for code blocks
+        const copyButtons = document.querySelectorAll('.copy-btn');
+        copyButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.getAttribute('data-code');
+                if (targetId) {
+                    const codeElement = document.getElementById(targetId);
+                    if (codeElement) {
+                        let textToCopy = codeElement.innerText;
+                        navigator.clipboard.writeText(textToCopy).then(() => {
+                            const originalText = btn.innerText;
+                            btn.innerText = '✓ COPIED!';
+                            setTimeout(() => {
+                                btn.innerText = originalText;
+                            }, 1800);
+                        }).catch(() => {
+                            btn.innerText = 'ERROR';
+                            setTimeout(() => btn.innerText = '📋 Copy', 1000);
+                        });
+                    }
+                }
+            });
+        });
+
+        // Optional: Add hash routing click
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+                const targetEl = document.getElementById(targetId);
+                if (targetEl) {
+                    targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    history.pushState(null, null, `#${targetId}`);
+                }
+            });
+        });
+
+        // initial active if hash on load
+        if (window.location.hash) {
+            const hashId = window.location.hash.substring(1);
+            const targetSection = document.getElementById(hashId);
+            if (targetSection) targetSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>

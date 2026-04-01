@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extreme Verify | The New Standard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #000;
+            color: #fff;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .liquid-text {
+            background: linear-gradient(90deg, #007AFF, #BF5AF2, #00FF85, #007AFF);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 5s linear infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .mesh-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 0% 0%, rgba(0, 122, 255, 0.1) 0, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(0, 255, 133, 0.1) 0, transparent 40%);
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+    <div class="mesh-bg"></div>
+  <nav class="fixed top-0 w-full z-50 glass border-b border-white/10 px-6 py-3 flex justify-between items-center">
+        <a href="/" class="flex items-center gap-3 font-bold text-lg">
+            <img src="https://extremeweb.in/images/extreme.png" class="h-10 w-10 rounded-full object-cover border border-white/20 shadow-md" alt="Logo"
+>
+<span class="font-bold tracking-tight">
+    Extreme<span class="text-blue-500 ml-1">Verify</span>
+  </span>
+        </a>
+        <div class="hidden md:flex gap-8 text-sm font-medium text-white/70">
+            <a href="#platform" class="hover:text-white transition-colors">Platform</a>
+            <a href="#solutions" class="hover:text-white transition-colors">Solutions</a>
+            <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
+        </div>
+        <a href="/login.html"
+            class="bg-white text-black px-5 py-2 rounded-full text-sm font-bold hover:scale-105 transition-transform">Developer
+            Console</a>
+    </nav>
+
+    <section class="pt-40 pb-20 px-6 text-center">
+        <div
+            class="inline-block px-4 py-1.5 rounded-full glass text-[11px] font-bold tracking-widest text-blue-400 border border-blue-500/20 mb-8 uppercase">
+            Built for 2026 Scale
+        </div>
+        <h1 class="text-6xl md:text-8xl font-extrabold tracking-tighter leading-[0.9] mb-6">
+            Reliable WhatsApp<br>
+            <span class="liquid-text">Messaging Infrastructure for Developers.</span>
+        </h1>
+        <p class="text-lg md:text-xl text-white/50 max-w-2xl mx-auto mb-12 leading-relaxed">
+            Stop paying for every 24-hour conversation window. Extreme Verify offers the full power of WhatsApp
+            Automation with zero session fees.
+        </p>
+        <div class="flex flex-col md:flex-row justify-center gap-4">
+            <a href="/register.html"
+                class="bg-white text-black px-10 py-4 rounded-2xl font-bold text-lg hover:bg-neutral-200 transition-all">Claim
+                Free Access</a>
+            <a href="#" class="glass px-10 py-4 rounded-2xl font-bold text-lg hover:bg-white/10 transition-all">Read
+                Documentation</a>
+        </div>
+    </section>
+
+    <section id="solutions" class="max-w-7xl mx-auto px-6 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[300px]">
+
+            <div
+                class="md:col-span-2 glass rounded-[2rem] p-10 flex flex-col justify-end relative overflow-hidden group">
+                <div class="absolute top-10 right-10 opacity-20 group-hover:opacity-40 transition-opacity">
+                    <img src="https://extremeweb.in/images/extreme.png" class="h-40 grayscale" alt="">
+                </div>
+                <h3 class="text-3xl font-bold mb-2">Zero Per-Message Tax</h3>
+                <p class="text-white/50 max-w-md">While Meta charges up to $0.15 per conversation, we keep your wallet
+                    closed. Send unlimited broadcasts without fear of the invoice.</p>
+            </div>
+
+            <div
+                class="glass rounded-[2rem] p-10 bg-gradient-to-br from-blue-600/20 to-purple-600/20 border-blue-500/20">
+                <div class="text-4xl mb-4">⚡</div>
+                <h3 class="text-2xl font-bold mb-2">Instant Scale</h3>
+                <p class="text-white/50 text-sm">Deploy thousands of messages simultaneously with our high-throughput
+                    dedicated nodes.</p>
+            </div>
+
+            <div class="glass rounded-[2rem] p-10 flex flex-col items-center justify-center text-center">
+                <div class="text-green-400 text-5xl font-black mb-2">$0</div>
+                <p class="text-xs font-bold uppercase tracking-widest text-white/40">Monthly Base Fee</p>
+            </div>
+
+            <div
+                class="md:col-span-2 glass rounded-[2rem] p-8 flex flex-col md:flex-row gap-8 items-center border-emerald-500/20">
+                <div class="flex-1">
+                    <h3 class="text-2xl font-bold mb-2">Developer Friendly</h3>
+                    <p class="text-white/50 text-sm mb-4">RESTful APIs that work with any language. Node.js, Python, or
+                        even simple cURL.</p>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 bg-white/5 rounded-md text-[10px] border border-white/10">v2.0
+                            STABLE</span>
+                        <span
+                            class="px-3 py-1 bg-green-500/10 text-green-400 rounded-md text-[10px] border border-green-500/20">99.9%
+                            UPTIME</span>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 bg-black/40 rounded-xl p-4 font-mono text-xs border border-white/5">
+                    <div class="flex gap-1.5 mb-3">
+                        <div class="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
+                    </div>
+                    <span class="text-purple-400">POST</span> /api/send<br>
+                    <span class="text-blue-400">{</span><br>
+                    &nbsp;&nbsp;"to": <span class="text-green-400">"1234567890"</span>,<br>
+                    &nbsp;&nbsp;"type": <span class="text-green-400">"free_unlimited"</span><br>
+                    <span class="text-blue-400">}</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="text-center group">
+                <div
+                    class="text-5xl md:text-7xl font-extrabold tracking-tighter mb-2 group-hover:scale-110 transition-transform">
+                    99.9<span class="text-blue-500">%</span></div>
+                <p class="text-xs font-bold uppercase tracking-[0.2em] text-white/30">Node Uptime</p>
+            </div>
+            <div class="text-center group">
+                <div
+                    class="text-5xl md:text-7xl font-extrabold tracking-tighter mb-2 group-hover:scale-110 transition-transform">
+                    0<span class="text-purple-500">ms</span></div>
+                <p class="text-xs font-bold uppercase tracking-[0.2em] text-white/30">API Latency</p>
+            </div>
+            <div class="text-center group">
+                <div
+                    class="text-5xl md:text-7xl font-extrabold tracking-tighter mb-2 group-hover:scale-110 transition-transform">
+                    50<span class="text-green-500">M+</span></div>
+                <p class="text-xs font-bold uppercase tracking-[0.2em] text-white/30">Messages Sent</p>
+            </div>
+            <div class="text-center group">
+                <div
+                    class="text-5xl md:text-7xl font-extrabold tracking-tighter mb-2 group-hover:scale-110 transition-transform">
+                    ∞</div>
+                <p class="text-xs font-bold uppercase tracking-[0.2em] text-white/30">Future Proof</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="use-cases" class="max-w-7xl mx-auto px-6 py-20 relative overflow-hidden">
+        <!-- Background Blur Effect -->
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-purple-600/10 blur-[120px] rounded-full -z-10 pointer-events-none">
+        </div>
+
+        <div class="text-center mb-16">
+            <div
+                class="inline-block px-4 py-1.5 rounded-full glass text-[11px] font-bold tracking-widest text-purple-400 border border-purple-500/20 mb-4 uppercase">
+                OTP & Custom Messaging
+            </div>
+            <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">One API. <span
+                    class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">Endless
+                    Possibilities.</span></h2>
+            <p class="text-white/50 text-lg max-w-2xl mx-auto">From secure authentication to real-time transactional
+                alerts, we handle your entire communication layer effortlessly.</p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            <div
+                class="glass bg-gradient-to-br from-white/[0.08] to-transparent p-6 rounded-3xl flex flex-col items-center justify-center text-center hover:-translate-y-2 transition-transform duration-300 cursor-default group border-t border-white/5 hover:border-blue-500/30">
+                <svg class="w-10 h-10 mb-4 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 stroke-blue-400 drop-shadow-[0_0_15px_rgba(59,130,246,0.6)]"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                <h4 class="font-bold text-sm text-white/90 tracking-wide">OTP Verification</h4>
+            </div>
+
+            <div
+                class="glass bg-gradient-to-br from-white/[0.08] to-transparent p-6 rounded-3xl flex flex-col items-center justify-center text-center hover:-translate-y-2 transition-transform duration-300 cursor-default group border-t border-white/5 hover:border-green-500/30">
+                <svg class="w-10 h-10 mb-4 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 stroke-green-400 drop-shadow-[0_0_15px_rgba(34,197,94,0.6)]"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <h4 class="font-bold text-sm text-white/90 tracking-wide">Order Confirmation</h4>
+            </div>
+
+            <div
+                class="glass bg-gradient-to-br from-white/[0.08] to-transparent p-6 rounded-3xl flex flex-col items-center justify-center text-center hover:-translate-y-2 transition-transform duration-300 cursor-default group border-t border-white/5 hover:border-purple-500/30">
+                <svg class="w-10 h-10 mb-4 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 stroke-purple-400 drop-shadow-[0_0_15px_rgba(168,85,247,0.6)]"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <rect x="1" y="3" width="15" height="13"></rect>
+                    <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                    <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                    <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                </svg>
+                <h4 class="font-bold text-sm text-white/90 tracking-wide">Shipping Update</h4>
+            </div>
+
+            <div
+                class="glass bg-gradient-to-br from-white/[0.08] to-transparent p-6 rounded-3xl flex flex-col items-center justify-center text-center hover:-translate-y-2 transition-transform duration-300 cursor-default group border-t border-white/5 hover:border-orange-500/30">
+                <svg class="w-10 h-10 mb-4 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 stroke-orange-400 drop-shadow-[0_0_15px_rgba(249,115,22,0.6)]"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path
+                        d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                    </path>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+                <h4 class="font-bold text-sm text-white/90 tracking-wide">Delivery Alert</h4>
+            </div>
+
+            <div
+                class="glass bg-gradient-to-br from-white/[0.08] to-transparent p-6 rounded-3xl flex flex-col items-center justify-center text-center hover:-translate-y-2 transition-transform duration-300 cursor-default group border-t border-white/5 hover:border-yellow-500/30">
+                <svg class="w-10 h-10 mb-4 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 stroke-yellow-400 drop-shadow-[0_0_15px_rgba(234,179,8,0.6)]"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <h4 class="font-bold text-sm text-white/90 tracking-wide">Class Reminder</h4>
+            </div>
+
+            <div
+                class="glass bg-gradient-to-br from-white/[0.08] to-transparent p-6 rounded-3xl flex flex-col items-center justify-center text-center hover:-translate-y-2 transition-transform duration-300 cursor-default group border-t border-white/5 hover:border-teal-500/30">
+                <svg class="w-10 h-10 mb-4 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 stroke-teal-400 drop-shadow-[0_0_15px_rgba(20,184,166,0.6)]"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+                <h4 class="font-bold text-sm text-white/90 tracking-wide">Notes Uploaded</h4>
+            </div>
+
+            <div
+                class="glass bg-gradient-to-br from-white/[0.08] to-transparent p-6 rounded-3xl flex flex-col items-center justify-center text-center hover:-translate-y-2 transition-transform duration-300 cursor-default group border-t border-white/5 hover:border-red-500/30">
+                <svg class="w-10 h-10 mb-4 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 stroke-red-400 drop-shadow-[0_0_15px_rgba(239,68,68,0.6)]"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+                <h4 class="font-bold text-sm text-white/90 tracking-wide">Exam Alerts</h4>
+            </div>
+
+            <div
+                class="glass bg-gradient-to-br from-white/[0.08] to-transparent p-6 rounded-3xl flex flex-col items-center justify-center text-center hover:-translate-y-2 transition-transform duration-300 cursor-default group border-t border-white/5 hover:border-emerald-500/30">
+                <svg class="w-10 h-10 mb-4 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 stroke-emerald-400 drop-shadow-[0_0_15px_rgba(16,185,129,0.6)]"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <h4 class="font-bold text-sm text-white/90 tracking-wide">Payment Success</h4>
+            </div>
+
+            <div
+                class="glass bg-gradient-to-br from-white/[0.08] to-transparent p-6 rounded-3xl flex flex-col items-center justify-center text-center hover:-translate-y-2 transition-transform duration-300 cursor-default group border-t border-white/5 hover:border-indigo-500/30">
+                <svg class="w-10 h-10 mb-4 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 stroke-indigo-400 drop-shadow-[0_0_15px_rgba(99,102,241,0.6)]"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path>
+                    <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path>
+                    <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path>
+                </svg>
+                <h4 class="font-bold text-sm text-white/90 tracking-wide">Withdrawal Alert</h4>
+            </div>
+
+            <div
+                class="glass bg-gradient-to-br from-white/[0.08] to-transparent p-6 rounded-3xl flex flex-col items-center justify-center text-center hover:-translate-y-2 transition-transform duration-300 cursor-default group border-t border-white/5 hover:border-rose-500/30">
+                <svg class="w-10 h-10 mb-4 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 stroke-rose-400 drop-shadow-[0_0_15px_rgba(244,63,94,0.6)]"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                    </path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                <h4 class="font-bold text-sm text-white/90 tracking-wide">Fraud Alert</h4>
+            </div>
+
+            <div
+                class="glass bg-gradient-to-br from-white/[0.08] to-transparent p-6 rounded-3xl flex flex-col items-center justify-center text-center hover:-translate-y-2 transition-transform duration-300 cursor-default group border-t border-white/5 hover:border-cyan-500/30">
+                <svg class="w-10 h-10 mb-4 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 stroke-cyan-400 drop-shadow-[0_0_15px_rgba(6,182,212,0.6)]"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                    <line x1="1" y1="10" x2="23" y2="10"></line>
+                </svg>
+                <h4 class="font-bold text-sm text-white/90 tracking-wide">Transaction Alert</h4>
+            </div>
+
+            <div
+                class="glass bg-gradient-to-br from-white/[0.08] to-transparent p-6 rounded-3xl flex flex-col items-center justify-center text-center hover:-translate-y-2 transition-transform duration-300 cursor-default group border-t border-white/5 hover:border-sky-500/30">
+                <svg class="w-10 h-10 mb-4 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 stroke-sky-400 drop-shadow-[0_0_15px_rgba(14,165,233,0.6)]"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    <path d="M12 8v4"></path>
+                    <path d="M12 16h.01"></path>
+                </svg>
+                <h4 class="font-bold text-sm text-white/90 tracking-wide">Login Alert</h4>
+            </div>
+        </div>
+    </section>
+
+    <section id="platform" class="max-w-6xl mx-auto px-6 py-24 relative">
+        <div class="glass rounded-[3rem] p-12 md:p-20 flex flex-col md:flex-row items-center gap-16 overflow-hidden">
+            <div class="flex-1 text-center md:text-left">
+                <h2 class="text-4xl font-bold mb-6">Works with everything.<br><span
+                        class="text-white/40">Effortlessly.</span></h2>
+                <p class="text-white/50 mb-8">Connect your CRM, Store, or Custom Dashboard in seconds with our pre-built
+                    SDKs.</p>
+                <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                    <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm">Shopify</span>
+                    <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm">WooCommerce</span>
+                    <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm">Zapier</span>
+                    <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm">Node.js</span>
+                </div>
+            </div>
+
+            <div class="flex-1 relative h-[200px] w-full flex items-center justify-center">
+                <div class="absolute w-32 h-32 bg-blue-500/20 blur-[60px] rounded-full"></div>
+                <img src="https://extremeweb.in/images/extreme.png" class="h-24 w-24 relative z-10 animate-pulse"
+                    alt="Extreme Logo">
+                <div class="absolute top-0 left-10 p-4 glass rounded-2xl rotate-12">🐍</div>
+                <div class="absolute bottom-0 right-10 p-4 glass rounded-2xl -rotate-12">📦</div>
+                <div class="absolute top-1/2 right-0 p-4 glass rounded-2xl rotate-45">🌐</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="max-w-7xl mx-auto px-6 py-24 relative overflow-hidden">
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-blue-600/10 blur-[120px] rounded-full -z-10">
+        </div>
+
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">Choose Your <span
+                    class="liquid-text">Infrastructure.</span></h2>
+            <p class="text-white/50 text-lg max-w-2xl mx-auto">One charges you for every conversation. The other
+                empowers your business to grow without limits.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 items-stretch">
+
+            <div
+                class="glass border-white/5 rounded-[3rem] p-10 flex flex-col items-center text-center opacity-80 grayscale-[0.5] hover:grayscale-0 transition-all duration-700">
+                <div class="mb-8 p-4 bg-white/5 rounded-3xl">
+                    <img src="https://static.vecteezy.com/system/resources/thumbnails/004/201/564/small/meta-social-network-emblem-blue-stylish-letter-m-or-mobius-band-vector.jpg"
+                        class="h-16 w-16 object-cover rounded-xl" alt="Meta Logo">
+                </div>
+                <h3 class="text-2xl font-bold mb-2 text-white/80">Meta Cloud API</h3>
+                <div class="text-red-500/80 font-mono text-sm mb-6 uppercase tracking-widest">Paid Service</div>
+
+                <ul class="space-y-4 mb-10 text-white/40 text-sm">
+                    <li class="flex items-center gap-2"><span class="text-red-900">✕</span> Paid 24-hour Session Windows
+                    </li>
+                    <li class="flex items-center gap-2"><span class="text-red-900">✕</span> Per-Message Conversation
+                        Fees</li>
+                    <li class="flex items-center gap-2"><span class="text-red-900">✕</span> Strict Template Approval
+                    </li>
+                    <li class="flex items-center gap-2"><span class="text-red-900">✕</span> Complex Credit Management
+                    </li>
+                </ul>
+
+                <div class="mt-auto pt-6 border-t border-white/5 w-full">
+                    <p class="text-3xl font-bold text-white/60 font-mono">$$$</p>
+                </div>
+            </div>
+
+            <div class="relative group">
+                <div
+                    class="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-[3rem] blur opacity-20 group-hover:opacity-40 transition duration-1000">
+                </div>
+
+                <div
+                    class="relative glass border-white/20 bg-white/5 rounded-[3rem] p-10 flex flex-col items-center text-center">
+                    <div class="mb-8 p-4 bg-white/10 rounded-3xl shadow-2xl shadow-emerald-500/20">
+                        <img src="https://extremeweb.in/images/extreme.png" class="h-16 w-16 object-contain"
+                            alt="Extreme Logo">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Extreme Verify</h3>
+                    <div class="text-emerald-400 font-mono text-sm mb-6 uppercase tracking-widest animate-pulse">
+                        Community Free Edition</div>
+
+                    <ul class="space-y-4 mb-10 text-white/70 text-sm font-medium">
+                        <li class="flex items-center gap-2"><span class="text-emerald-500">✓</span> Zero Session Fees
+                        </li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-500">✓</span> Unlimited Free
+                            Messaging</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-500">✓</span> No Template
+                            Restrictions</li>
+                        <li class="flex items-center gap-2"><span class="text-emerald-500">✓</span> Direct Node
+                            Connectivity</li>
+                    </ul>
+
+                    <div class="mt-auto pt-6 border-t border-white/10 w-full">
+                        <p class="text-4xl font-black text-emerald-400 font-mono">$0.00</p>
+                        <p class="text-[10px] text-emerald-400/50 uppercase tracking-widest font-bold mt-2">Always and
+                            Forever</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <p class="text-center mt-12 text-white/30 text-sm italic">
+            * Comparison based on standard Meta WhatsApp Business API pricing models vs. Extreme Verify independent
+            nodes.
+        </p>
+    </section>
+
+    <section class="py-32 px-6 text-center">
+        <img src="https://extremeweb.in/images/extreme.png" class="h-20 mx-auto mb-8 opacity-50" alt="">
+        <h2 class="text-4xl md:text-5xl font-bold mb-8">Ready to switch to the Free Tier?</h2>
+        <a href="/register.html"
+            class="bg-white text-black px-12 py-5 rounded-2xl font-bold text-xl hover:scale-105 transition-all inline-block shadow-2xl shadow-blue-500/20">Create
+            My Free Account</a>
+    </section>
+
+    <footer class="py-10 text-center text-white/30 text-xs border-t border-white/5">
+        &copy; 2026 Extreme Verify. Powered by Extreme Web Infrastructure.
+    </footer>
+
+</body>
+
+</html>
+
+

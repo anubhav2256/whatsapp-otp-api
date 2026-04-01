@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extreme Verify - API Key & Logs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #000000; --surface-1: #0a0a0a; --surface-2: #141414; --surface-3: #1c1c1e;
+            --border: rgba(255,255,255,0.08); --blue: #0a84ff; --blue-dim: rgba(10,132,255,0.1);
+            --green: #30d158; --green-dim: rgba(48,209,88,0.1); --orange: #ff9f0a; --orange-dim: rgba(255,159,10,0.1);
+            --red: #ff453a; --text-1: #ffffff; --text-2: rgba(235,235,245,0.8); --text-3: rgba(235,235,245,0.38);
+            --mono: 'JetBrains Mono', monospace; --sans: 'Inter', sans-serif;
+            --radius: 10px; --radius-lg: 14px;
+        }
+        html, body { height: 100%; }
+        body { font-family: var(--sans); background: #000; color: var(--text-1); display: flex; height: 100vh; overflow: hidden; -webkit-font-smoothing: antialiased; }
+        .sidebar { width: 240px; flex-shrink: 0; background: var(--surface-1); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 24px 16px; gap: 4px; }
+        .sidebar-logo { display: flex; align-items: center; gap: 10px; padding: 0 10px 28px; }
+        .logo-icon { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+        .logo-text { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; color: var(--text-1); }
+        .sidebar-section { font-family: var(--mono); font-size: 10px; font-weight: 500; color: var(--text-3); letter-spacing: 0.12em; text-transform: uppercase; padding: 16px 10px 6px; }
+        .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--radius); color: var(--text-2); text-decoration: none; font-size: 13.5px; font-weight: 500; transition: background 0.15s, color 0.15s; }
+        .nav-item svg { opacity: 0.6; flex-shrink: 0; }
+        .nav-item:hover { background: var(--surface-2); color: var(--text-1); }
+        .nav-item:hover svg { opacity: 1; }
+        .nav-item.active { background: var(--blue); color: #ffffff; font-weight: 500; }
+        .nav-item.active svg { opacity: 1; }
+        .nav-item.danger { color: #ef4444; }
+        .nav-item.danger svg { opacity: 0.8; }
+        .nav-item.danger:hover { background: rgba(239,68,68,0.08); }
+        .sidebar-spacer { flex: 1; }
+        .sidebar-user { padding: 14px; border-radius: var(--radius); background: var(--surface-2); border: 1px solid var(--border); margin-bottom: 8px; }
+        .sidebar-user-name { font-size: 13px; font-weight: 600; color: var(--text-1); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .sidebar-user-email { font-size: 11px; color: var(--text-3); font-family: var(--mono); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .sidebar-user-badge { display: inline-flex; align-items: center; gap: 4px; margin-top: 7px; font-size: 10px; font-family: var(--mono); font-weight: 500; color: var(--blue); background: rgba(10,132,255,0.12); padding: 2px 8px; border-radius: 100px; letter-spacing: 0.04em; }
+
+        .main { flex: 1; overflow-y: auto; padding: 28px 36px; background: #000; }
+        .topbar { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 32px; }
+        .topbar-title { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.1; }
+        .topbar-sub { font-size: 12px; font-family: var(--mono); color: var(--text-3); margin-top: 4px; letter-spacing: 0.05em; }
+        .card { background: var(--surface-1); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 20px; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .card-title { font-size: 14px; font-weight: 600; color: var(--text-1); }
+        .card-sub { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+        .btn-copy { padding: 6px 13px; border-radius: 7px; background: var(--surface-3); border: 1px solid var(--border); color: rgba(255,255,255,0.7); font-size: 11px; font-family: var(--mono); font-weight: 600; letter-spacing: 0.06em; cursor: pointer; transition: background 0.12s, color 0.12s; }
+        .btn-copy:hover { background: #2a2a2a; color: #fff; }
+
+        table { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 12px; text-align: left; }
+        th, td { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+        th { color: var(--text-3); font-weight: 500; letter-spacing: 0.05em; font-size: 10px; text-transform: uppercase; }
+        td { color: var(--text-2); }
+        tbody tr:hover { background: var(--surface-2); }
+
+        .badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; }
+        .badge-sandbox { background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(249,115,22,0.2); }
+        .badge-prod { background: var(--green-dim); color: var(--green); border: 1px solid rgba(48,209,88,0.2); }
+
+        .main::-webkit-scrollbar { width: 5px; }
+        .main::-webkit-scrollbar-track { background: transparent; }
+        .main::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 3px; }
+
+        .input-row { display: flex; gap: 10px; align-items: center; }
+        .input-field { flex: 1; padding: 10px 14px; background: #000; border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius); color: #fff; font-family: var(--mono); font-size: 13px; outline: none; transition: border-color 0.12s; -webkit-font-smoothing: antialiased; }
+        .input-field::placeholder { color: var(--text-3); }
+        .input-field:focus { border-color: rgba(10,132,255,0.5); }
+        .btn-primary { padding: 11px 22px; border-radius: var(--radius); background: var(--blue); border: none; color: #fff; font-family: var(--sans); font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: opacity 0.15s; }
+        .btn-primary:hover { opacity: 0.85; }
+        .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        /* ── Usage Bar ── */
+        .usage-container { margin-top: 10px; }
+        .usage-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .usage-label { font-size: 12px; font-weight: 600; color: var(--text-2); }
+        .usage-tier { font-size: 10px; font-family: var(--mono); font-weight: 700; color: var(--blue); background: var(--blue-dim); padding: 3px 10px; border-radius: 100px; letter-spacing: 0.05em; }
+        .usage-bar-bg { height: 8px; background: var(--surface-3); border-radius: 100px; overflow: hidden; border: 1px solid var(--border); }
+        .usage-bar-fill { height: 100%; background: linear-gradient(90deg, var(--blue), #60a5fa); border-radius: 100px; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        .usage-stats { font-size: 11px; font-family: var(--mono); color: var(--text-3); margin-top: 10px; display: flex; justify-content: space-between; }
+    </style>
+    <script>
+        function copyKey() {
+            navigator.clipboard.writeText("{{API_KEY}}");
+            const btn = document.getElementById("copyBtn");
+            const orig = btn.innerText;
+            btn.innerText = "COPIED!";
+            btn.style.color = "var(--green)";
+            btn.style.borderColor = "rgba(0,255,136,0.3)";
+            setTimeout(() => { btn.innerText = orig; btn.style.color = ""; btn.style.borderColor = ""; }, 2000);
+        }
+        function toggleKey(btn) {
+            const el = document.getElementById("apiKeyDisplay");
+            const visible = btn.dataset.visible === "true";
+            if (visible) {
+                el.innerText = "••••••••••••••••••••••••••••••••••••";
+                btn.innerText = "SHOW";
+                btn.dataset.visible = "false";
+            } else {
+                el.innerText = "{{API_KEY}}";
+                btn.innerText = "HIDE";
+                btn.dataset.visible = "true";
+            }
+        }
+        function filterLogs() {
+            const textFilter = document.getElementById('logFilter').value.toLowerCase();
+            const dateFilter = document.getElementById('dateFilter').value;
+            const rows = document.querySelectorAll('#logsTable tbody tr');
+            
+            const now = new Date();
+            const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+            const startOfYesterday = startOfToday - 86400000;
+            const startOf7Days = startOfToday - (7 * 86400000);
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                const textMatch = text.includes(textFilter);
+                
+                let dateMatch = true;
+                const timestampStr = row.getAttribute('data-timestamp');
+                if (timestampStr) {
+                    const timestamp = parseInt(timestampStr, 10);
+                    if (dateFilter === 'today') {
+                        dateMatch = timestamp >= startOfToday;
+                    } else if (dateFilter === 'yesterday') {
+                        dateMatch = timestamp >= startOfYesterday && timestamp < startOfToday;
+                    } else if (dateFilter === '7days') {
+                        dateMatch = timestamp >= startOf7Days;
+                    }
+                }
+                
+                row.style.display = (textMatch && dateMatch) ? '' : 'none';
+            });
+        }
+        let showAllLogs = false;
+        let lastFetchedLogs = [];
+
+        function toggleViewAllLogs() {
+            showAllLogs = !showAllLogs;
+            const btn = document.getElementById('btnViewAllLogs');
+            if(btn) btn.innerText = showAllLogs ? "View Less" : "View All Logs";
+            renderLogsTable(lastFetchedLogs);
+        }
+
+        function renderLogsTable(logs) {
+            const tbody = document.querySelector('#logsTable tbody');
+            const wrapper = document.getElementById('viewAllLogsWrapper');
+            
+            if (logs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 24px;">No OTP logs found.</td></tr>';
+                if(wrapper) wrapper.style.display = 'none';
+                return;
+            }
+            
+            let displayLogs = logs;
+            if (!showAllLogs && logs.length > 5) {
+                displayLogs = logs.slice(0, 5);
+                if(wrapper) wrapper.style.display = 'block';
+            } else {
+                if(wrapper) wrapper.style.display = (logs.length > 5) ? 'block' : 'none';
+            }
+            
+            tbody.innerHTML = displayLogs.map(log => {
+                const badge = log.type === 'test' ? '<span class="badge badge-sandbox">TEST</span>' : (log.type === 'custom' ? '<span class="badge" style="background: rgba(10,132,255,0.15); color: var(--blue); border: 1px solid rgba(10,132,255,0.2);">MSG</span>' : '<span class="badge badge-prod">API</span>');
+                const dateStr = new Date(log.created_at).toLocaleString();
+                const val = log.type === 'custom' ? (log.message || '') : (log.otp || '');
+                return `<tr data-timestamp="${new Date(log.created_at).getTime()}">
+                    <td>${log.id}</td>
+                    <td>${log.number}</td>
+                    <td style="font-weight: 600;">${val}</td>
+                    <td>${badge}</td>
+                    <td style="color: rgba(255,255,255,0.4);">${dateStr}</td>
+                </tr>`;
+            }).join('');
+            filterLogs();
+        }
+
+        async function fetchLogsAndUpdate() {
+            try {
+                const r = await fetch(`/api/logs/{{USER_ID}}`);
+                if (!r.ok) return;
+                lastFetchedLogs = await r.json();
+                renderLogsTable(lastFetchedLogs);
+            } catch(e) {}
+        }
+
+        function setSendType(type) {
+            const btnOtp = document.getElementById('btnToggleOtp');
+            const btnMsg = document.getElementById('btnToggleMsg');
+            const txtMsg = document.getElementById('testMessage');
+            const btnSend = document.getElementById('btnSubmitSend');
+            const typeInput = document.getElementById('sendType');
+            
+            if (type === 'otp') {
+                btnOtp.style.background = 'var(--blue)';
+                btnOtp.style.border = 'none';
+                btnOtp.style.color = '#fff';
+                
+                btnMsg.style.background = 'var(--surface-3)';
+                btnMsg.style.border = '1px solid var(--border)';
+                btnMsg.style.color = 'var(--text-2)';
+                
+                txtMsg.style.display = 'none';
+                btnSend.innerText = 'Send OTP';
+                typeInput.value = 'otp';
+            } else {
+                btnMsg.style.background = 'var(--blue)';
+                btnMsg.style.border = 'none';
+                btnMsg.style.color = '#fff';
+                
+                btnOtp.style.background = 'var(--surface-3)';
+                btnOtp.style.border = '1px solid var(--border)';
+                btnOtp.style.color = 'var(--text-2)';
+                
+                txtMsg.style.display = 'block';
+                btnSend.innerText = 'Send Message';
+                typeInput.value = 'msg';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('testOtpForm');
+            if (!form) return;
+            
+            const numInput = document.getElementById('testNumber');
+            const submitBtn = document.getElementById('btnSubmitSend');
+            const valMsg = document.getElementById('validationMessage');
+
+            if (numInput && submitBtn && valMsg) {
+                numInput.addEventListener('input', (e) => {
+                    const val = e.target.value;
+                    const isNumeric = /^\d+$/.test(val);
+                    
+                    submitBtn.disabled = !(val.length === 10 && isNumeric);
+                    
+                    if (val.length > 0 && (!isNumeric || val.length > 10)) {
+                        valMsg.style.display = 'block';
+                    } else {
+                        valMsg.style.display = 'none';
+                    }
+                });
+            }
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const num = document.getElementById('testNumber').value;
+                const type = document.getElementById('sendType') ? document.getElementById('sendType').value : 'otp';
+                const msgText = document.getElementById('testMessage') ? document.getElementById('testMessage').value : '';
+                
+                if (type === 'msg' && !msgText.trim()) {
+                    alert('Please enter a message.');
+                    return;
+                }
+                
+                const statusEl = document.getElementById('testOtpStatus');
+                const btn = document.getElementById('btnSubmitSend') || form.querySelector('button[type="submit"]');
+                btn.disabled = true;
+                statusEl.style.color = 'var(--text-2)';
+                statusEl.innerText = 'Sending…';
+                try {
+                    const r = await fetch('/send', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: '{{USER_ID}}', number: num, type: type, message: msgText })
+                    });
+                    const d = await r.json();
+                    if (d.alert) alert(d.alert);
+                    statusEl.innerText = d.message || 'Done';
+                    
+                    const isSuccess = d.message && (d.message.includes('OTP Sent') || d.message.includes('Message Sent'));
+                    statusEl.style.color = (d.message && (isSuccess || d.message.includes('Please wait'))) ? 'var(--orange)' : 'var(--red)';
+                    if (isSuccess) statusEl.style.color = 'var(--green)';
+                    
+                    if (r.ok || (d.message && d.message.includes('Please wait'))) {
+                        let remaining = 45;
+                        if (d.message && d.message.includes('Please wait')) {
+                            const match = d.message.match(/(\d+) seconds/);
+                            if (match) remaining = parseInt(match[1], 10);
+                        }
+                        btn.innerText = `Wait ${remaining}s`;
+                        const interval = setInterval(() => {
+                            remaining--;
+                            if (remaining > 0) { btn.innerText = `Wait ${remaining}s`; } 
+                            else { 
+                                clearInterval(interval); 
+                                btn.innerText = type === 'otp' ? 'Send OTP' : 'Send Message'; 
+                                btn.disabled = false; 
+                            }
+                        }, 1000);
+                    } else { btn.disabled = false; }
+                } catch (err) { statusEl.innerText = 'Request failed'; statusEl.style.color = 'var(--red)'; btn.disabled = false; }
+            });
+
+            // Usage Bar Fix
+            const bar = document.getElementById('usageBarFill');
+            if (bar) bar.style.width = bar.dataset.percentage + '%';
+
+            fetchLogsAndUpdate();
+            setInterval(fetchLogsAndUpdate, 5000);
+        });
+    </script>
+</head>
+<body>
+<aside class="sidebar">
+    <div class="sidebar-logo">
+        <img src="https://extremeweb.in/images/extreme.png" alt="Extreme Logo" class="logo-icon">
+        <span class="logo-text">Extreme Verify</span>
+    </div>
+    <span class="sidebar-section">Navigation</span>
+    <a class="nav-item" href="/dashboard/{{USER_ID}}">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Overview
+    </a>
+    <a class="nav-item active" href="/api-key/{{USER_ID}}">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+        API Key
+    </a>
+    <a class="nav-item" href="/live/{{USER_ID}}">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Live Graph
+    </a>
+    <a class="nav-item" href="/docs/{{USER_ID}}">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Docs
+    </a>
+    <a class="nav-item" href="/settings/{{USER_ID}}">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Settings
+    </a>
+    <div class="sidebar-spacer"></div>
+    <div class="sidebar-user">
+        <div class="sidebar-user-name">{{FULL_NAME}}</div>
+        <div class="sidebar-user-email">{{EMAIL}}</div>
+        <div class="sidebar-user-badge"><svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg> {{DEV_CATEGORY}}</div>
+    </div>
+    <a href="/login.html" class="nav-item danger"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Logout</a>
+</aside>
+<main class="main">
+    <div class="topbar">
+        <div><div class="topbar-title">API Key & Logs</div><div class="topbar-sub">{{EMAIL}}</div></div>
+    </div>
+    <div class="card">
+        <div class="card-header"><div><div class="card-title">Authentication Key</div><div class="card-sub">Used to authenticate all API requests</div></div></div>
+        <div style="background:#000; border:1px solid rgba(255,255,255,0.09); border-radius:var(--radius); padding:0; overflow:hidden;">
+            <div style="display:flex; align-items:center; padding:4px 6px 4px 16px; gap:10px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" style="flex-shrink:0;"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+                <span id="apiKeyDisplay" style="flex:1; font-family:var(--mono); font-size:13px; color:var(--blue); letter-spacing:0.05em; padding:12px 0;">••••••••••••••••••••••••••••••••••••</span>
+                <div style="display:flex;gap:6px;flex-shrink:0;">
+                    <button onclick="toggleKey(this)" style="padding:7px 13px; border-radius:8px; background:var(--surface-3); border:1px solid var(--border); color:var(--text-2); font-family:var(--mono); font-size:11px; font-weight:600; cursor:pointer;" data-visible="false">SHOW</button>
+                    <button class="btn-copy" id="copyBtn" onclick="copyKey()">COPY</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" style="margin-bottom: 8px;"><div><div class="card-title">Daily Operation Usage</div><div class="card-sub">Resource allocation for your current plan</div></div></div>
+        <div class="usage-container">
+            <div class="usage-info"><span class="usage-label">API Usage today</span><span class="usage-tier">TIER: SANDBOX</span></div>
+            <div class="usage-bar-bg"><div class="usage-bar-fill" id="usageBarFill" data-percentage="{{USAGE_PERCENTAGE}}" style="width: 0%;"></div></div>
+            <div class="usage-stats"><span>{{DAILY_COUNT}} / 50 total requests</span><span>{{USAGE_PERCENTAGE}}% utilized</span></div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" style="margin-bottom:12px;"><div><div class="card-title">Send Test Request</div><div class="card-sub">Verify your WhatsApp connectivity — do not include country code (+91 is added automatically). This service is only for India.</div></div></div>
+        
+        <div style="display:flex; gap:6px; margin-bottom:12px; align-items:center;">
+            <button id="btnToggleOtp" onclick="setSendType('otp')" style="padding:6px 14px; border-radius:6px; background:var(--blue); border:none; color:#fff; font-family:var(--sans); font-size:11px; font-weight:600; cursor:pointer; transition:0.2s;">OTP</button>
+            <button id="btnToggleMsg" onclick="setSendType('msg')" style="padding:6px 14px; border-radius:6px; background:var(--surface-3); border:1px solid var(--border); color:var(--text-2); font-family:var(--sans); font-size:11px; font-weight:600; cursor:pointer; transition:0.2s;">Message</button>
+        </div>
+
+        <form id="testOtpForm" style="display:flex; flex-direction:column; gap:10px; margin-bottom: 12px;" onsubmit="return false;">
+            <div>
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <input class="input-field" type="text" id="testNumber" placeholder="Enter 10-digit mobile number" required />
+                    <button type="submit" id="btnSubmitSend" class="btn-primary" style="min-width:130px;" disabled>Send OTP</button>
+                </div>
+                <div id="validationMessage" style="font-size:11px; color:var(--red); display:none; margin-top:6px;">Only Indian numbers supported (10 digits)</div>
+            </div>
+            <textarea class="input-field" id="testMessage" placeholder="Enter your custom message..." style="display:none; resize:vertical; min-height:80px;"></textarea>
+            <input type="hidden" id="sendType" value="otp">
+        </form>
+        <div style="font-size:11.5px; color:var(--text-3); font-family:var(--sans); margin-bottom: 12px; line-height: 1.5; background: rgba(255,159,10,0.05); border: 1px solid rgba(255,159,10,0.2); padding: 8px 12px; border-radius: 8px;">
+            <strong style="color:var(--orange)">Policy limits:</strong> Max 50 OTPs per day (resets at 12 AM). To prevent spam, there is a mandatory 45-second delay between each request.
+        </div>
+        <div id="testOtpStatus" style="font-size:13px; font-family:var(--mono); font-weight:500;"></div>
+    </div>
+    <div class="card">
+        <div class="card-header" style="margin-bottom:12px;"><div><div class="card-title">Supported Message Types</div><div class="card-sub">Complete platform for verification and notifications via our API</div></div></div>
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            <span class="badge" style="background:var(--blue-dim); color:var(--blue); border:1px solid rgba(10,132,255,0.2); font-size:11px; padding:6px 12px; border-radius:100px;">Authentication OTPs</span>
+            <span class="badge" style="background:var(--surface-3); color:var(--text-2); border:1px solid var(--border); font-size:11px; padding:6px 12px; border-radius:100px;">Order confirmation</span>
+            <span class="badge" style="background:var(--surface-3); color:var(--text-2); border:1px solid var(--border); font-size:11px; padding:6px 12px; border-radius:100px;">Shipping update</span>
+            <span class="badge" style="background:var(--surface-3); color:var(--text-2); border:1px solid var(--border); font-size:11px; padding:6px 12px; border-radius:100px;">Delivery alert</span>
+            <span class="badge" style="background:var(--surface-3); color:var(--text-2); border:1px solid var(--border); font-size:11px; padding:6px 12px; border-radius:100px;">Class reminder</span>
+            <span class="badge" style="background:var(--surface-3); color:var(--text-2); border:1px solid var(--border); font-size:11px; padding:6px 12px; border-radius:100px;">Notes uploaded</span>
+            <span class="badge" style="background:var(--surface-3); color:var(--text-2); border:1px solid var(--border); font-size:11px; padding:6px 12px; border-radius:100px;">Exam alerts</span>
+            <span class="badge" style="background:var(--surface-3); color:var(--text-2); border:1px solid var(--border); font-size:11px; padding:6px 12px; border-radius:100px;">Payment success</span>
+            <span class="badge" style="background:var(--surface-3); color:var(--text-2); border:1px solid var(--border); font-size:11px; padding:6px 12px; border-radius:100px;">Withdrawal alert</span>
+            <span class="badge" style="background:var(--surface-3); color:var(--text-2); border:1px solid var(--border); font-size:11px; padding:6px 12px; border-radius:100px;">Fraud alert</span>
+            <span class="badge" style="background:var(--surface-3); color:var(--text-2); border:1px solid var(--border); font-size:11px; padding:6px 12px; border-radius:100px;">Transaction alert</span>
+            <span class="badge" style="background:var(--surface-3); color:var(--text-2); border:1px solid var(--border); font-size:11px; padding:6px 12px; border-radius:100px;">Account login alert</span>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div><div class="card-title">OTP Logs</div><div class="card-sub">History of all OTPs dispatched</div></div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <select id="dateFilter" class="input-field" style="padding: 8px 12px; font-size: 12px; min-width: 120px;" onchange="filterLogs()">
+                    <option value="all">All Time</option>
+                    <option value="today">Today</option>
+                    <option value="yesterday">Yesterday</option>
+                    <option value="7days">Last 7 Days</option>
+                </select>
+                <input type="text" id="logFilter" class="input-field" placeholder="Search logs..." style="max-width: 250px; padding: 8px 12px; font-size: 12px;" onkeyup="filterLogs()">
+            </div>
+        </div>
+        <div style="background:#000; border:1px solid rgba(255,255,255,0.09); border-radius:var(--radius); overflow-x: auto;">
+            <table id="logsTable"><thead><tr><th>ID</th><th>WhatsApp Number</th><th>OTP Sent</th><th>Type</th><th>Created At</th></tr></thead><tbody>{{TABLE_ROWS}}</tbody></table>
+        </div>
+        <div id="viewAllLogsWrapper" style="text-align: center; margin-top: 16px; display: none;">
+            <button id="btnViewAllLogs" onclick="toggleViewAllLogs()" style="padding:8px 16px; border-radius:8px; background:var(--surface-2); border:1px solid var(--border); color:var(--text-1); font-family:var(--sans); font-size:12px; font-weight:600; cursor:pointer; transition:background 0.2s;">View All Logs</button>
+        </div>
+    </div>
+</main>
+</body>
+</html>
