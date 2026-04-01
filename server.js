@@ -20,17 +20,17 @@ app.use(express.urlencoded({ extended: true }));
 // Root will be served by express.static('index.html') automatically.
 
 // ================= DB =================
-// const db = mysql.createConnection({
-//     host: process.env.DB_HOST,
-//     user: process.env.DB_USER,
-//     password: process.env.DB_PASS,
-//     database: process.env.DB_NAME
-// });
+ const db = mysql.createConnection({
+     host: process.env.DB_HOST,
+     user: process.env.DB_USER,
+     password: process.env.DB_PASS,
+   database: process.env.DB_NAME
+ });
 
-// db.connect(err => {
-//     if (err) console.log("DB Error:", err);
-//     else console.log("✅ MySQL Connected");
-// });
+db.connect(err => {
+     if (err) console.log("DB Error:", err);
+     else console.log("✅ MySQL Connected");
+ });
 
 // ================= STORE CLIENTS =================
 let users = {};
